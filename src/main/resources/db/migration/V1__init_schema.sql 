@@ -1,0 +1,37 @@
+-- Create events table
+CREATE TABLE event (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    total_tickets INT NOT NULL,
+    available_tickets INT NOT NULL,
+    tickets_sold INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create users table
+CREATE TABLE app_user (
+    id BIGINT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Create bookings table
+CREATE TABLE booking (
+    id BIGINT PRIMARY KEY,
+    event_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (event_id) REFERENCES event(id),
+    FOREIGN KEY (user_id) REFERENCES app_user(id)
+);
+
+-- Create waiting_list table
+CREATE TABLE waiting_list_entry (
+    id BIGINT PRIMARY KEY,
+    event_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (event_id) REFERENCES event(id),
+    FOREIGN KEY (user_id) REFERENCES app_user(id)
+);
